@@ -1,0 +1,23 @@
+---
+name: PromoCodes
+main: Px1L\PromoCodes\Core\Main
+version: 0.1.0
+api:
+  - 4.8.0
+
+author: Px1L
+description: Create vouchers for players as a reward
+
+commands:
+  promo:
+    description: "Creates a voucher"
+    usage: "/promo [name]"
+    permission: promo.create
+
+permissions:
+  promo.create:
+    default: op
+    description: "allows creating vouchers"
+
+  promo.use:
+    description: "using permission"
