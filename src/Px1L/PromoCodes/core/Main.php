@@ -34,7 +34,7 @@ class Main extends PluginBase {
 	    $server = $this->getServer();
 	    $nocmd = TextFormat::RED."You do not have permission to use this command";
 
-        if ($cmd->getName() === "promo")
+        if ($cmd->getName() == "promo")
         {
             if ($sender instanceof Player)
             {
