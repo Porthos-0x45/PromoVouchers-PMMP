@@ -4,25 +4,27 @@ declare(strict_types=1);
 
 namespace Px1L\PromoCodes\Listener;
 
+use pocketmine\data\bedrock\EnchantmentIdMap;
 use Px1L\PromoCodes\Core\Main;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\utils\TextFormat;
 use pocketmine\item\Item;
 use pocketmine\item\enchantment\Enchantment;
+use pocketmine\item\ItemFactory;
+use pocketmine\item\ItemIds;
 
 class InteractListener implements Listener
 {
-    public $plugin;
     public $nocmd = TextFormat::RED . "You do not have permission to use this command";
 
     public function __construct(Main $plugin)
     {
-        $this->plugin = $plugin;
     }
 
     public function onPlayerInteract(PlayerInteractEvent $event)
     {
+        $plugin = $this->plugin;
         $player = $event->getPlayer();
         $inventory = $player->getInventory();
 
@@ -30,13 +32,13 @@ class InteractListener implements Listener
         if ($player->hasPermission("promo.use")) {
             foreach ($plugin->config->getAll() as $name) {
                 if ($inventory->getItemInHand()->getName() == $name) {
-                    $item = Item::get((int)$plugin->config->getNested($name)["ID"], 0, (int)$plugin->config->getNested($name)["COUNT"]);
-                    $enchantment = Enchantment::getEnchantment((int)$plugin->config->getNested($name)["ENCHANT_ID"]);
+                    $item = ItemFactory::getInstance()->get((int)$plugin->config->getNested($name)["ID"], 0, (int)$plugin->config->getNested($name)["COUNT"]);
+                    $enchantment = EnchantmentIdMap::getInstance()->fromId((int)$plugin->config->getNested($name)["ENCHANT_ID"]);
                     $enchantment->setLevel((int) $plugin->config->getNested($name)["ENCHANT_LVL"]);
 
                     $item->addEnchantment($enchantment);
 
-                    $inventory->setItemInHand(Item::get(Item::AIR));
+                    $inventory->setItemInHand(ItemFactory::getInstance()->get(ItemIds::AIR));
                     $inventory->setItemInHand($item);
 
                     if ($inventory->getItemInHand()->getId() == (int)$plugin->config->getNested($name)["ID"]) {
