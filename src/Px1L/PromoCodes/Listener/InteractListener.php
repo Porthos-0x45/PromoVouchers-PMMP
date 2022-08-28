@@ -31,10 +31,11 @@ class InteractListener implements Listener
 
         if ($player->hasPermission("promo.use")) {
             foreach ($plugin->config->getAll() as $name) {
+                $player->sendMessage("NAME: " . $name . " ITEM: " . $inventory->getItemInHand()->getName());
                 if ($inventory->getItemInHand()->getName() == $name) {
                     $item = ItemFactory::getInstance()->get((int)$plugin->config->getNested($name)["ID"], 0, (int)$plugin->config->getNested($name)["COUNT"]);
 
-                    if ($plugin->config->getNested($name)["ENCHANT_ID"] === null) {
+                    if ($plugin->config->getNested($name)["ENCHANT_ID"] == null) {
                         $enchantment = EnchantmentIdMap::getInstance()->fromId((int)$plugin->config->getNested($name)["ENCHANT_ID"]);
                         $enchantment->setLevel((int) $plugin->config->getNested($name)["ENCHANT_LVL"]);
 
