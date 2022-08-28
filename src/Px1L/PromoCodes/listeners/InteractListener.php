@@ -33,7 +33,7 @@ class InteractListener implements Listener
             {
                 if ($inventory->getItemInHand()->getName() == $name)
                 {
-                    $item = Item::get((int)$plugin->config->getNested($name)["ID"], 0, (int)$plugin->config->getNested($name)["COUNT"])
+                    $item = Item::get((int)$plugin->config->getNested($name)["ID"], 0, (int)$plugin->config->getNested($name)["COUNT"]);
                     $enchantment = Enchantment::getEnchantment((int)$plugin->config->getNested($name)["ENCHANT_ID"]);
                     $enchantment->setLevel((int) $plugin->config->getNested($name)["ENCHANT_LVL"]);
 

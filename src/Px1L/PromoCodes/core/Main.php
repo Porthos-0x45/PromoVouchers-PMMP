@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Px1L\PromoCodes\Core;
 
 use pocketmine\event\Listener;
@@ -24,15 +26,22 @@ class Main extends PluginBase {
     public function onEnable() : void{
 		$this->getServer()->getLogger()->info(TextFormat::RED."I NEED SLEEEEP!!!!!!!!!!!!!");
 
-		$this->getServer()->getPluginManager()->registerEvents(new InteractListener($this), $this)
+		$this->getServer()->getPluginManager()->registerEvents(new InteractListener($this), $this);
 		$config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
         $this->saveDefaultConfig();
 	}
+
+    public function onPlayerMove(PlayerMoveEvent $e)
+    {
+
+    } 
 
 	public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool {
         $player = $this->getServer()->getPlayer($sender->getName());
 	    $server = $this->getServer();
 	    $nocmd = TextFormat::RED."You do not have permission to use this command";
+
+        
 
         if ($cmd->getName() == "promo")
         {
