@@ -23,6 +23,7 @@ class InteractListener implements Listener
 
     public function onPlayerInteract(PlayerInteractEvent $event)
     {
+        $plugin = $this->plugin;
         $player = $event->getPlayer();
         $inventory = $player->getInventory();
 
