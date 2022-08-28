@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Px1L\PromoCodes\listeners;
+namespace Px1L\PromoCodes\Listener;
 
-use Pixel\AntiVoid\Core\Main;
+use Px1L\PromoCodes\Core\Main;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\utils\TextFormat;
@@ -23,7 +23,6 @@ class InteractListener implements Listener
 
     public function onPlayerInteract(PlayerInteractEvent $event)
     {
-        $plugin = $this->plugin;
         $player = $event->getPlayer();
         $inventory = $player->getInventory();
 

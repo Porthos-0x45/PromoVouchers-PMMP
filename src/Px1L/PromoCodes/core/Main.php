@@ -13,7 +13,7 @@ use pocketmine\utils\Config;
 use pocketmine\item\Item;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\player\Player;
-use Px1L\PromoCodes\listners\InteractListener;
+use Px1L\PromoCodes\Listener\InteractListener;
 
 class Main extends PluginBase
 {
@@ -30,6 +30,7 @@ class Main extends PluginBase
         $this->getServer()->getLogger()->info(TextFormat::RED . "I NEED SLEEEEP!!!!!!!!!!!!!");
 
         $this->getServer()->getPluginManager()->registerEvents(new InteractListener($this), $this);
+
         $config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
         $this->saveDefaultConfig();
     }
@@ -38,7 +39,6 @@ class Main extends PluginBase
     public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool
     {
         $player = $this->getServer->getPlayer($sender->getName());
-        $server = $this->getServer();
         $nocmd = TextFormat::RED . "You do not have permission to use this command";
 
 
