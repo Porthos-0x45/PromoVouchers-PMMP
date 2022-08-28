@@ -18,7 +18,7 @@ class InteractListener implements Listener
 {
     public $nocmd = TextFormat::RED . "You do not have permission to use this command";
 
-    public function __construct(Main $plugin)
+    public function __construct(private Main $plugin)
     {
     }
 
@@ -33,10 +33,13 @@ class InteractListener implements Listener
             foreach ($plugin->config->getAll() as $name) {
                 if ($inventory->getItemInHand()->getName() == $name) {
                     $item = ItemFactory::getInstance()->get((int)$plugin->config->getNested($name)["ID"], 0, (int)$plugin->config->getNested($name)["COUNT"]);
-                    $enchantment = EnchantmentIdMap::getInstance()->fromId((int)$plugin->config->getNested($name)["ENCHANT_ID"]);
-                    $enchantment->setLevel((int) $plugin->config->getNested($name)["ENCHANT_LVL"]);
 
-                    $item->addEnchantment($enchantment);
+                    if ($plugin->config->getNested($name)["ENCHANT_ID"] === null) {
+                        $enchantment = EnchantmentIdMap::getInstance()->fromId((int)$plugin->config->getNested($name)["ENCHANT_ID"]);
+                        $enchantment->setLevel((int) $plugin->config->getNested($name)["ENCHANT_LVL"]);
+
+                        $item->addEnchantment($enchantment);
+                    }
 
                     $inventory->setItemInHand(ItemFactory::getInstance()->get(ItemIds::AIR));
                     $inventory->setItemInHand($item);

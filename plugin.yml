@@ -1,9 +1,9 @@
 ---
 name: PromoCodes
-main: Px1L\PromoCodes\Core\Main
+main: Px1L\PromoCodes\core\Main
 version: 0.1.0
 api:
-  - 4.8.0
+  - 4.0.0
 
 author: Px1L
 description: Create vouchers for players as a reward
