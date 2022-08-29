@@ -7,4 +7,7 @@ usage:
 - op permission: promo.create
 - non op permission: promo.use
 
-command: /promo [name]
+commands:
+ - /promo create [name]
+ - /promo remove [name]
+ - /promo get [name]
