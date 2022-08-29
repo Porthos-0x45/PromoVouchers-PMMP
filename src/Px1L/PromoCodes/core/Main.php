@@ -64,14 +64,22 @@ class Main extends PluginBase
 
                             $voucher->addEnchantment($enchantments);
                             $voucher->setCustomName($name);
+                            $voucher->setLore(array(
+                                TextFormat::AQUA . "Voucher created by " . $player->getName(),
+                                TextFormat::RESET . " ",
+                                TextFormat::RED . TextFormat::ITALIC . "Plugin by Px1L"
+                            ));
 
                             $config->setNested($name . ".ID",    $item->getId());
                             $config->setNested($name . ".COUNT", $item->getCount());
                             if ($item->hasEnchantments()) {
+                                $config->setNested($name . "ENCHANT", true);
                                 foreach ($item->getEnchantments() as $enchantment) {
                                     $config->setNested($name . ".ENCHANT_ID", EnchantmentIdMap::getInstance()->toId($enchantment));
                                     $config->setNested($name . ".ENCHANT_LVL", $enchantment->getLevel());
                                 }
+                            } else {
+                                $config->setNested($name . "ENCHANT", false);
                             }
 
                             $config->save();

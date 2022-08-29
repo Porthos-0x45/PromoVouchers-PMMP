@@ -16,7 +16,7 @@ use pocketmine\item\ItemIds;
 
 class InteractListener implements Listener
 {
-    public $nocmd = TextFormat::RED . "You do not have permission to use this command";
+    const NOPERMS = TextFormat::RED . "You do not have permission to use this command";
 
     public function __construct(private Main $plugin)
     {
@@ -27,15 +27,20 @@ class InteractListener implements Listener
         $plugin = $this->plugin;
         $player = $event->getPlayer();
         $inventory = $player->getInventory();
-
+        $lore = array(
+            TextFormat::AQUA . "Voucher created by " . $player->getName(),
+            TextFormat::RESET . " ",
+            TextFormat::RED . TextFormat::ITALIC . "Plugin by Px1L"
+        );
 
         if ($player->hasPermission("promo.use")) {
-            foreach ($plugin->config->getAll() as $name) {
-                $player->sendMessage("NAME: " . $name . " ITEM: " . $inventory->getItemInHand()->getName());
-                if ($inventory->getItemInHand()->getName() == $name) {
+            if ($plugin->config->get($inventory->getItemInHand()->getName()) != null) {
+                if ($inventory->getItemInHand()->getLore() == $lore) {
+                    $name = $inventory->getItemInHand()->getName();
+
                     $item = ItemFactory::getInstance()->get((int)$plugin->config->getNested($name)["ID"], 0, (int)$plugin->config->getNested($name)["COUNT"]);
 
-                    if ($plugin->config->getNested($name)["ENCHANT_ID"] == null) {
+                    if ($plugin->config->getNested($name)["ENCHANT"] == true) {
                         $enchantment = EnchantmentIdMap::getInstance()->fromId((int)$plugin->config->getNested($name)["ENCHANT_ID"]);
                         $enchantment->setLevel((int) $plugin->config->getNested($name)["ENCHANT_LVL"]);
 
@@ -54,7 +59,7 @@ class InteractListener implements Listener
                 }
             }
         } else {
-            $player->sendMessage($this->nocmd);
+            $player->sendMessage($this::NOPERMS);
         }
     }
 }
