@@ -55,6 +55,7 @@ class InteractListener implements Listener
                             " " . TextFormat::BLUE . $item->getName());
 
                         $plugin->config->remove($name);
+                        $plugin->config->save();
                     }
                 }
             }
