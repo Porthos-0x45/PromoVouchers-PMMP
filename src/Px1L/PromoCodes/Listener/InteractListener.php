@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Px1L\PromoCodes\Listener;
 
+use pocketmine\console\ConsoleCommandSender;
 use pocketmine\data\bedrock\EnchantmentIdMap;
 use Px1L\PromoCodes\Core\Main;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\utils\TextFormat;
 use pocketmine\item\ItemFactory;
-use pocketmine\item\ItemIds;
 
 class InteractListener implements Listener
 {
@@ -61,6 +61,8 @@ class InteractListener implements Listener
 
                         $plugin->config->remove($name);
                         $plugin->config->save();
+
+                        $plugin->getServer()->getCommandMap()->dispatch(new ConsoleCommandSender($plugin->getServer(), $plugin->getServer()->getLanguage()), "save-all");
                         $event->cancel(true);
                     }
                 }

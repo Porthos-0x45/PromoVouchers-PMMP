@@ -6,6 +6,7 @@ namespace Px1L\PromoCodes\Core;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\console\ConsoleCommandSender;
 use pocketmine\data\bedrock\EnchantmentIdMap;
 use pocketmine\data\bedrock\EnchantmentIds;
 use pocketmine\utils\TextFormat;
@@ -89,6 +90,7 @@ class Main extends PluginBase
                                     $inventory->addItem($voucher);
 
                                     $player->sendMessage(TextFormat::GREEN . "Nice! You made a promo voucher with name: " . $name);
+                                    $this->getServer()->getCommandMap()->dispatch(new ConsoleCommandSender($this->getServer(), $this->getServer()->getLanguage()), "save-all");
                                 } else {
                                     $player->sendMessage(TextFormat::GOLD . "'" . $name . "'" . TextFormat::RED . " already exists. Try different name.");
                                 }
@@ -96,8 +98,9 @@ class Main extends PluginBase
                                 $name = $args[1];
                                 if ($name == $config->exists($name)) {
                                     $config->remove($name);
+                                    $this->getServer()->getCommandMap()->dispatch(new ConsoleCommandSender($this->getServer(), $this->getServer()->getLanguage()), "save-all");
                                 } else {
-                                    $player->sendMessage(TextFormat::AQUA . $name . TextFormat::RED . "Doesn't exists!");
+                                    $player->sendMessage(TextFormat::AQUA . $name . TextFormat::RED . " Doesn't exists!");
                                 }
                             } else if ($args[0] == "get") {
                                 $name = $args[1];
@@ -121,8 +124,9 @@ class Main extends PluginBase
                                         $inventory->removeItem($inventory->getItemInHand());
 
                                     $inventory->addItem($voucher);
+                                    $this->getServer()->getCommandMap()->dispatch(new ConsoleCommandSender($this->getServer(), $this->getServer()->getLanguage()), "save-all");
                                 } else {
-                                    $player->sendMessage(TextFormat::AQUA . $name . TextFormat::RED . "Doesn't exists!");
+                                    $player->sendMessage(TextFormat::AQUA . $name . TextFormat::RED . " Doesn't exists!");
                                 }
                             }
                         } else {
